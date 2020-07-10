@@ -16,33 +16,12 @@ const useStyles = makeStyles(theme => ({
 export default function TabPanel(props) {
     const { table_menu_list, value, index, ...other } = props;
     const [menu, setMenu] = useState();
-    const [buttonValue, setButtonValue] = useState({});
     useEffect(() => {
         if (value === index) {
         setMenu(table_menu_list[index]);
         }
     }, [value])
     const classes = useStyles();
-    const decreaseValue = (dishId) => {
-        if(!buttonValue[dishId]){
-        buttonValue[dishId] = 0
-        }
-        if(buttonValue[dishId] > 0){
-        setButtonValue(prevbuttonValue=>({
-            ...prevbuttonValue,[dishId]:buttonValue[dishId]-1
-        }))
-        };
-    };
-    const inreaseValue = (dishId) => {
-        if(!buttonValue[dishId]){
-            buttonValue[dishId] = 0
-        }
-        if(buttonValue[dishId] >= 0){
-            setButtonValue(prevbuttonValue=>({
-                ...prevbuttonValue,[dishId]:buttonValue[dishId]+1
-            }))
-        }
-    };
         return (
             <div
             role="tabpanel"
@@ -97,16 +76,16 @@ export default function TabPanel(props) {
                                 >
                                 <IconButton
                                     style={{ color: "white" }}
-                                    onClick={() => decreaseValue(item.dish_id)}
+                                    onClick={() => props.decreaseValue(item.dish_id)}
                                 >
                                     <RemoveIcon />
                                 </IconButton>
                                 <Button style={{ color: "white" }}>
-                                    {buttonValue[item.dish_id] ? buttonValue[item.dish_id] : 0}
+                                    {props.buttonValue[item.dish_id] ? props.buttonValue[item.dish_id] : 0}
                                 </Button>
                                 <IconButton
                                     style={{ color: "white" }}
-                                    onClick={() => inreaseValue(item.dish_id)}
+                                    onClick={() => props.increaseValue(item.dish_id)}
                                 >
                                     <AddIcon />
                                 </IconButton>
